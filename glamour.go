@@ -220,6 +220,17 @@ func WithChromaFormatter(formatter string) TermRendererOption {
 	}
 }
 
+// WithImageProtocol sets the graphics protocol used to render images inline.
+// Supported protocols are [ansi.ImageProtocolKitty] and
+// [ansi.ImageProtocolSixel]. By default, images are rendered as styled text
+// and links only.
+func WithImageProtocol(protocol ansi.ImageProtocol) TermRendererOption {
+	return func(tr *TermRenderer) error {
+		tr.ansiOptions.ImageProtocol = protocol
+		return nil
+	}
+}
+
 // WithOptions sets multiple TermRenderer options within a single TermRendererOption.
 func WithOptions(options ...TermRendererOption) TermRendererOption {
 	return func(tr *TermRenderer) error {

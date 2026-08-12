@@ -13,6 +13,18 @@ import (
 	"github.com/yuin/goldmark/util"
 )
 
+// ImageProtocol is the graphics protocol used to render images inline.
+type ImageProtocol int
+
+const (
+	// ImageProtocolNone renders images as styled text and links only.
+	ImageProtocolNone ImageProtocol = iota
+	// ImageProtocolKitty renders images using the Kitty graphics protocol.
+	ImageProtocolKitty
+	// ImageProtocolSixel renders images using the Sixel graphics format.
+	ImageProtocolSixel
+)
+
 // Options is used to configure an ANSIRenderer.
 type Options struct {
 	BaseURL          string
@@ -22,6 +34,7 @@ type Options struct {
 	PreserveNewLines bool
 	Styles           StyleConfig
 	ChromaFormatter  string
+	ImageProtocol    ImageProtocol
 }
 
 // ANSIRenderer renders markdown content as ANSI escaped sequences.
@@ -127,6 +140,13 @@ func (r *ANSIRenderer) renderNode(w util.BufWriter, source []byte, node ast.Node
 			err := e.Finisher.Finish(writeTo, r.context)
 			if err != nil {
 				return ast.WalkStop, fmt.Errorf("glamour: error finishing render: %w", err)
+			}
+		}
+
+		// flush any remaining image sequences at the end of the document
+		if node.Type() == ast.TypeDocument {
+			if err := r.context.flushPendingImages(w); err != nil {
+				return ast.WalkStop, err
 			}
 		}
 
