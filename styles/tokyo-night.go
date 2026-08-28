@@ -1,6 +1,6 @@
 package styles
 
-import "charm.land/glamour/v2/ansi"
+import "github.com/0magnet/glamour/ansi"
 
 // TokyoNightStyleConfig is the tokyo night style.
 var TokyoNightStyleConfig = ansi.StyleConfig{

@@ -7,7 +7,7 @@ import (
 	"io"
 	"strings"
 
-	"charm.land/glamour/v2/internal/autolink"
+	"github.com/0magnet/glamour/internal/autolink"
 	east "github.com/yuin/goldmark-emoji/ast"
 	"github.com/yuin/goldmark/ast"
 	astext "github.com/yuin/goldmark/extension/ast"

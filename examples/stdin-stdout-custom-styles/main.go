@@ -14,7 +14,7 @@ import (
 	"io"
 	"os"
 
-	"charm.land/glamour/v2"
+	"github.com/0magnet/glamour"
 )
 
 const defaultWidth = 80

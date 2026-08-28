@@ -1,4 +1,4 @@
-module charm.land/glamour/v2
+module github.com/0magnet/glamour
 
 go 1.25.8
 
